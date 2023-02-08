@@ -1,7 +1,7 @@
-import { Wrapper } from "./LinkToNote.styled";
+import { Link } from "./LinkToNote.styled";
 
-const LinkToNote = ({ title }) => {
-  return <Wrapper>{title}</Wrapper>;
+const LinkToNote = ({ id, title }) => {
+  return <Link to={`/notes/${id}`}>{title}</Link>;
 };
 
 export default LinkToNote;
