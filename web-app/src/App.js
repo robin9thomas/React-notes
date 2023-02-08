@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
 import { darkTheme, GlobalStyle } from "./GlobalStyle";
@@ -35,7 +36,13 @@ function App() {
         )}
       </Side>
       <Main>
-        <Note />
+        <Routes>
+          <Route
+            path="/"
+            element={<div>Sélectionnez une note pour l'éditer</div>}
+          />
+          <Route path="/notes/:id" element={<Note />} />
+        </Routes>
       </Main>
     </ThemeProvider>
   );
