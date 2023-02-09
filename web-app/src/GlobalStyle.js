@@ -5,8 +5,14 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  *:focus {
+    outline: none;
+    box-shadow: inset 0px 0px 0px 2px ${({ theme }) => theme.mainTextColor};
+  }
+
   body {
     margin: 0;
+    font-size: 16px;
     color: ${({ theme }) => theme.mainTextColor};
     background-color: ${({ theme }) => theme.mainBackgroundColor};
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

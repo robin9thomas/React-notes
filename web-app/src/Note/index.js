@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { Form, Title, Content } from "./Note.styled";
+import { Form, Title, Content, SaveButton, SaveAndStatus } from "./Note.styled";
 
 const Note = () => {
   const { id } = useParams();
@@ -56,7 +56,9 @@ const Note = () => {
           });
         }}
       />
-      <button>Enregistrer</button>
+      <SaveAndStatus>
+        <SaveButton>Enregistrer</SaveButton>
+      </SaveAndStatus>
     </Form>
   );
 };
