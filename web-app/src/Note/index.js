@@ -11,21 +11,29 @@ import {
 } from "./Note.styled";
 import { FiCheck } from "react-icons/fi";
 import { IconAndLabel } from "../IconAndLabel/IconAndLabel.styled";
+import { FullHeightAndWidthCentered } from "../App.styled";
 
 const Note = ({ onSave }) => {
   const { id } = useParams();
 
   const [note, setNote] = useState(null);
-  const [status, setStatus] = useState("IDLE");
+  const [getStatus, setGetStatus] = useState("IDLE");
+  const [saveStatus, setSaveStatus] = useState("IDLE");
 
   const fetchNote = useCallback(async () => {
+    setGetStatus("LOADING");
     const response = await fetch(`/notes/${id}`);
     const note = await response.json();
-    setNote(note);
+    if (response.ok) {
+      setNote(note);
+      setGetStatus("IDLE");
+    } else {
+      setGetStatus("ERROR");
+    }
   }, [id]);
 
   const saveNote = async () => {
-    setStatus("LOADING");
+    setSaveStatus("LOADING");
     const response = await fetch(`/notes/${note.id}`, {
       method: "PUT",
       body: JSON.stringify(note),
@@ -34,16 +42,32 @@ const Note = ({ onSave }) => {
       },
     });
     if (response.ok) {
-      setStatus("SAVED");
+      setSaveStatus("SAVED");
       onSave(note);
     } else {
-      setStatus("ERROR");
+      setSaveStatus("ERROR");
     }
   };
 
   useEffect(() => {
     fetchNote();
   }, [id, fetchNote]);
+
+  if (getStatus === "LOADING") {
+    return (
+      <FullHeightAndWidthCentered>
+        <Loader />
+      </FullHeightAndWidthCentered>
+    );
+  }
+
+  if (getStatus === "ERROR") {
+    return (
+      <FullHeightAndWidthCentered>
+        <ErrorMessage>404 : la note {id} n'existe pas.</ErrorMessage>
+      </FullHeightAndWidthCentered>
+    );
+  }
 
   return (
     <Form
@@ -56,7 +80,7 @@ const Note = ({ onSave }) => {
         type="text"
         value={note ? note.title : ""}
         onChange={(event) => {
-          setStatus("IDLE");
+          setSaveStatus("IDLE");
           setNote({
             ...note,
             title: event.target.value,
@@ -66,7 +90,7 @@ const Note = ({ onSave }) => {
       <Content
         value={note ? note.content : ""}
         onChange={(event) => {
-          setStatus("IDLE");
+          setSaveStatus("IDLE");
           setNote({
             ...note,
             content: event.target.value,
@@ -75,14 +99,14 @@ const Note = ({ onSave }) => {
       />
       <SaveAndStatus>
         <SaveButton>Enregistrer</SaveButton>
-        {status === "SAVED" ? (
+        {saveStatus === "SAVED" ? (
           <IconAndLabel>
             <FiCheck />
             Enregistré
           </IconAndLabel>
-        ) : status === "ERROR" ? (
+        ) : saveStatus === "ERROR" ? (
           <ErrorMessage>Erreur lors de la sauvegarde</ErrorMessage>
-        ) : status === "LOADING" ? (
+        ) : saveStatus === "LOADING" ? (
           <Loader />
         ) : null}
       </SaveAndStatus>

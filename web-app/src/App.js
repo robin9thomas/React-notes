@@ -3,7 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
 import { darkTheme, GlobalStyle } from "./GlobalStyle";
-import { Side, Main, MessageNoNoteSelected, LoaderWrapper } from "./App.styled";
+import {
+  Side,
+  Main,
+  FullHeightAndWidthCentered,
+  LoaderWrapper,
+} from "./App.styled";
 import { NoteList } from "./NoteList/NoteList.styled";
 import LinkToNote from "./LinkToNote";
 import Note from "./Note";
@@ -54,9 +59,9 @@ function App() {
           <Route
             path="/"
             element={
-              <MessageNoNoteSelected>
+              <FullHeightAndWidthCentered>
                 {!isLoading && "Sélectionnez une note pour l'éditer"}
-              </MessageNoNoteSelected>
+              </FullHeightAndWidthCentered>
             }
           />
           <Route path="/notes/:id" element={<Note onSave={updateNote} />} />

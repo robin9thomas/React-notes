@@ -22,7 +22,7 @@ const CENTERED = css`
   align-items: center;
 `;
 
-export const MessageNoNoteSelected = styled.div`
+export const FullHeightAndWidthCentered = styled.div`
   height: 100%;
   ${CENTERED}
 `;
