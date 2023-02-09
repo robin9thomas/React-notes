@@ -17,6 +17,12 @@ function App() {
     setNotes(notes);
   };
 
+  const updateNote = (noteToUpdate) => {
+    setNotes(
+      notes.map((note) => (note.id === noteToUpdate.id ? noteToUpdate : note))
+    );
+  };
+
   useEffect(() => {
     fetchNotes();
   }, []);
@@ -45,7 +51,7 @@ function App() {
               </MessageNoNoteSelected>
             }
           />
-          <Route path="/notes/:id" element={<Note />} />
+          <Route path="/notes/:id" element={<Note onSave={updateNote} />} />
         </Routes>
       </Main>
     </ThemeProvider>

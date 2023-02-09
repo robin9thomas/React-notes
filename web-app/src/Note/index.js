@@ -12,7 +12,7 @@ import {
 import { FiCheck } from "react-icons/fi";
 import { IconAndLabel } from "../IconAndLabel/IconAndLabel.styled";
 
-const Note = () => {
+const Note = ({ onSave }) => {
   const { id } = useParams();
 
   const [note, setNote] = useState(null);
@@ -35,6 +35,7 @@ const Note = () => {
     });
     if (response.ok) {
       setStatus("SAVED");
+      onSave(note);
     } else {
       setStatus("ERROR");
     }
