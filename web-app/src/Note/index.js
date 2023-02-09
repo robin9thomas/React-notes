@@ -13,14 +13,49 @@ const Note = () => {
     setNote(note);
   }, [id]);
 
+  const saveNote = async () => {
+    const response = await fetch(`/notes/${note.id}`, {
+      method: "PUT",
+      body: JSON.stringify(note),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      console.log("Erreur lors de la mise à jour de la note.");
+    }
+  };
+
   useEffect(() => {
     fetchNote();
   }, [id, fetchNote]);
 
   return (
-    <Form>
-      <Title type="text" value={note ? note.title : ""} />
-      <Content value={note ? note.content : ""} />
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        saveNote();
+      }}
+    >
+      <Title
+        type="text"
+        value={note ? note.title : ""}
+        onChange={(event) => {
+          setNote({
+            ...note,
+            title: event.target.value,
+          });
+        }}
+      />
+      <Content
+        value={note ? note.content : ""}
+        onChange={(event) => {
+          setNote({
+            ...note,
+            content: event.target.value,
+          });
+        }}
+      />
       <button>Enregistrer</button>
     </Form>
   );
