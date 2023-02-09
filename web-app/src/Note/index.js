@@ -1,11 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Form, Title, Content, SaveButton, SaveAndStatus } from "./Note.styled";
+import { FiCheck } from "react-icons/fi";
+import { IconAndLabel } from "../IconAndLabel/IconAndLabel.styled";
 
 const Note = () => {
   const { id } = useParams();
 
   const [note, setNote] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
 
   const fetchNote = useCallback(async () => {
     const response = await fetch(`/notes/${id}`);
@@ -21,7 +24,9 @@ const Note = () => {
         "Content-Type": "application/json",
       },
     });
-    if (!response.ok) {
+    if (response.ok) {
+      setIsSaved(true);
+    } else {
       console.log("Erreur lors de la mise à jour de la note.");
     }
   };
@@ -41,6 +46,7 @@ const Note = () => {
         type="text"
         value={note ? note.title : ""}
         onChange={(event) => {
+          setIsSaved(false);
           setNote({
             ...note,
             title: event.target.value,
@@ -50,6 +56,7 @@ const Note = () => {
       <Content
         value={note ? note.content : ""}
         onChange={(event) => {
+          setIsSaved(false);
           setNote({
             ...note,
             content: event.target.value,
@@ -58,6 +65,12 @@ const Note = () => {
       />
       <SaveAndStatus>
         <SaveButton>Enregistrer</SaveButton>
+        {isSaved && (
+          <IconAndLabel>
+            <FiCheck />
+            Enregistré
+          </IconAndLabel>
+        )}
       </SaveAndStatus>
     </Form>
   );
