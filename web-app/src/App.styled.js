@@ -15,3 +15,10 @@ export const Main = styled.main`
   height: 100vh;
   margin-inline-start: ${SIDE_WIDTH}px;
 `;
+
+export const MessageNoNoteSelected = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
 import { darkTheme, GlobalStyle } from "./GlobalStyle";
-import { Side, Main } from "./App.styled";
+import { Side, Main, MessageNoNoteSelected } from "./App.styled";
 import { NoteList } from "./NoteList/NoteList.styled";
 import LinkToNote from "./LinkToNote";
 import Note from "./Note";
@@ -39,7 +39,11 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<div>Sélectionnez une note pour l'éditer</div>}
+            element={
+              <MessageNoNoteSelected>
+                Sélectionnez une note pour l'éditer
+              </MessageNoNoteSelected>
+            }
           />
           <Route path="/notes/:id" element={<Note />} />
         </Routes>
