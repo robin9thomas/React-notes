@@ -27,6 +27,7 @@ export const darkTheme = {
   mainBackgroundColor: "#2c3338",
   asideBackgroundColor: "#1d2327",
   mainTextColor: "white",
+  errorColor: "red",
 };
 
 export const lightTheme = {
