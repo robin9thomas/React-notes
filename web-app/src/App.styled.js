@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const SIDE_WIDTH = 240;
 
@@ -16,9 +16,18 @@ export const Main = styled.main`
   margin-inline-start: ${SIDE_WIDTH}px;
 `;
 
-export const MessageNoNoteSelected = styled.div`
-  height: 100%;
+const CENTERED = css`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const MessageNoNoteSelected = styled.div`
+  height: 100%;
+  ${CENTERED}
+`;
+
+export const LoaderWrapper = styled.div`
+  height: 60px;
+  ${CENTERED}
 `;
