@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { BsMoon } from "react-icons/bs";
 import { darkTheme, GlobalStyles, lightTheme } from "./GlobalStyles";
-import { Side, Main, FullHeightAndWidthCentered, LoaderWrapper, IconNoteCreateWrapper, headButtons } from "./App.style";
+import { Side, Main, FullHeightAndWidthCentered, LoaderWrapper, IconNoteCreateWrapper, HeadButtons, Search } from "./App.style";
 import { NoteList } from "./NoteList/NoteList.styled";
 import Note from "./Note";
 import LinkToNote from "./LinkToNote";
@@ -23,6 +23,15 @@ function App() {
     setIsLoading(false);
     setNotes(notes);
   };
+
+  const searchNotes = async (query) => {
+    const notes = await fetch(`/notes?q=${query}`)
+      .then(res => res.json());
+
+    setIsLoading(false);
+    setNotes(notes);
+  }
+
 
   const createNote = async () => {
     const response = await fetch(`/notes/`, {
@@ -60,22 +69,25 @@ function App() {
       <ThemeProvider theme={CurrentTheme} >
         <GlobalStyles />
         <Side>
-          <headButtons>
-            <BsMoon onClick={(event) => {
-              if (theme === 'dark') {
-                setTheme('light');
-              }
-              else {
-                setTheme('dark')
-              }
+          <Search placeholder="Rechercher..." onInput={(event) => {
+            searchNotes(event.target.value);
+          }}></Search>
 
-            }} />
-            <IconNoteCreateWrapper onClick={(event) => {
-              createNote();
-            }}>
-              <IconNoteCreate/>
-            </IconNoteCreateWrapper>
-          </headButtons>
+          <BsMoon onClick={(event) => {
+            if (theme === 'dark') {
+              setTheme('light');
+            }
+            else {
+              setTheme('dark')
+            }
+
+          }} />
+          <IconNoteCreateWrapper onClick={(event) => {
+            createNote();
+          }}>
+            <IconNoteCreate />
+          </IconNoteCreateWrapper>
+
           {isLoading && (
             <LoaderWrapper>
               <Loader />

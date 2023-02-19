@@ -34,17 +34,18 @@ export const LoaderWrapper = styled.div`
 `;
 
 export const IconNoteCreateWrapper = styled.div`
-    display: flex;
-    justify-content: flex-end;
+    dispaly: flex;
+    
     margin-top: 10px;
     margin-right: 15px;
     margin-bottom: 10px;
 `;
 
-export const headButtons = styled.div`
-    display: inline-flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-right: 15px;
-    margin-bottom: 10px;
-`;
+export const Search = styled.input`
+  background-color: #415A77;
+  border: none;
+  padding: 16px;
+  color: ${(props) => props.theme.textColor};
+  border-radius:  50px;
+  width:95%;
+`
